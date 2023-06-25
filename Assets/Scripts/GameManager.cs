@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //Delay between each Player turn.
+    public float turnDelay = 0.1f;
+
     //Static instance of GameManager which allows it to be accessed by any other script.
     public static GameManager instance = null;
 
@@ -13,8 +16,16 @@ public class GameManager : MonoBehaviour
     //Current level number, expressed in game as "Day  1".
     private int level = 3;
 
+    //List of all Enemy units, used to issue them move commands.
+    private List<Enemy> enemies;
+
+    //Boolean to check if enemies are moving.
+    private bool enemiesMoving;
+
+    //Starting value for Player food points.
     public int playerFoodPoints = 100;
 
+    //Boolean to check if it's players turn, hidden in inspector but public.
     [HideInInspector] public bool playersTurn = true;
 
     //Awake is always called before any Start functions
@@ -32,6 +43,9 @@ public class GameManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
+        //Assign enemies to a new List of Enemy objects.
+        enemies = new List<Enemy>();
+
         //Get a component reference to the attached BoardManager script
         boardScript = GetComponent<BoardManager>();
 
@@ -42,18 +56,69 @@ public class GameManager : MonoBehaviour
     //Initializes the game for each level.
     void InitGame()
     {
+        //Clear any Enemy objects in our List to prepare for next level.
+        enemies.Clear();
+
         //Call the SetupScene function of the BoardManager script, pass it current level number.
         boardScript.SetupScene(level);
     }
 
     public void GameOver()
     {
+        //Disable this GameManager.
         enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Check that playersTurn or enemiesMoving or doingSetup are not currently true.
+        if(playersTurn || enemiesMoving)
+
+        //If any of these are true, return and do not start MoveEnemies.
+            return;
         
+        //Start moving enemies.
+        StartCoroutine(MoveEnemies());
+    }
+
+    //Call this to add the passed in Enemy to the List of Enemy objects.
+    public void AddEnemyToList(Enemy script)
+    {
+        //Add Enemy to List enemies.
+        enemies.Add(script);
+    }
+
+    //Coroutine to move enemies in sequence.
+    IEnumerator MoveEnemies()
+    {
+        //While enemiesMoving is true player is unable to move.
+        enemiesMoving = true;
+
+        //Wait for turnDelay seconds, defaults to .1 (100 ms).
+        yield return new WaitForSeconds(turnDelay);
+
+        //If there are no enemies spawned (IE in first level):
+        if(enemies.Count == 0)
+        {
+            //Wait for turnDelay seconds between moves, replaces delay caused by enemies moving when there are none.
+            yield return new WaitForSeconds(turnDelay);
+        }
+
+        //Loop through List of Enemy objects.
+        for(int i = 0; i < enemies.Count; i++)
+        {
+            //Call the MoveEnemy function of Enemy at index i in the enemies List.
+            enemies[i].MoveEnemy();
+
+            //Wait for Enemy's moveTime before moving next Enemy
+            yield return new WaitForSeconds(enemies[i].moveTime);
+        }
+
+        //Once Enemies are done moving, set playersTurn to true so player can move.
+        playersTurn = true;
+
+        //Enemies are done moving, set enemiesMoving to false.
+        enemiesMoving = false;
     }
 }
