@@ -23,6 +23,14 @@ public class Player : MovingObject
 
     public Text foodText;
 
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
+    public AudioClip eatSound1;
+    public AudioClip eatSound2;
+    public AudioClip drinkSound1;
+    public AudioClip drinkSound2;
+    public AudioClip gameOverSound;
+
     //Used to store a refrence to the Player's animator component
     private Animator animator;
 
@@ -94,6 +102,11 @@ public class Player : MovingObject
         //Hit allows us to reference the result of the Linecast done in Move.
         RaycastHit2D hit;
 
+        if(Move (xDir, yDir, out hit))
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
+
         //Since the player has moved and lost food points, check if the game has ended.
         CheckIfGameOver();
 
@@ -119,6 +132,7 @@ public class Player : MovingObject
             //Add pointsPerFood to the players current food total.
             food += pointsPerFood;
 
+            SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
             foodText.text = "+" + pointsPerFood + " Food: " + food;
 
             //Disable the food object the player collided with.
@@ -132,6 +146,7 @@ public class Player : MovingObject
 
             foodText.text = "+" + pointsPerSoda + " Food: " + food;
 
+            SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
             //Disable the soda object the player collided with.
             other.gameObject.SetActive(false);
         }
@@ -181,6 +196,8 @@ public class Player : MovingObject
         //Check if food point total is less than or equal to zero.
         if(food <= 0)
         //Call the GameOver function of GameManager.
+            SoundManager.instance.PlaySingle(gameOverSound);
+            SoundManager.instance.musicSource.Stop();
             GameManager.instance.GameOver();
     }
 }
