@@ -963,7 +963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Scavengers_SpriteSheet_32
+      name: new Sheet
       rect:
         serializedVersion: 2
         x: 0
@@ -1445,31 +1445,10 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Scavengers_SpriteSheet_55
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e8305410000000000800000000000000
-      internalID: 21300110
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 57c6caa2415d191408d164a15a54a0e5
     internalID: 0
     vertices: []
     indices: 
@@ -1503,7 +1482,6 @@ TextureImporter:
       Scavengers_SpriteSheet_3: 21300006
       Scavengers_SpriteSheet_30: 21300060
       Scavengers_SpriteSheet_31: 21300062
-      Scavengers_SpriteSheet_32: 21300064
       Scavengers_SpriteSheet_33: 21300066
       Scavengers_SpriteSheet_34: 21300068
       Scavengers_SpriteSheet_35: 21300070
@@ -1528,11 +1506,11 @@ TextureImporter:
       Scavengers_SpriteSheet_52: 21300104
       Scavengers_SpriteSheet_53: 21300106
       Scavengers_SpriteSheet_54: 21300108
-      Scavengers_SpriteSheet_55: 21300110
       Scavengers_SpriteSheet_6: 21300012
       Scavengers_SpriteSheet_7: 21300014
       Scavengers_SpriteSheet_8: 21300016
       Scavengers_SpriteSheet_9: 21300018
+      new Sheet: 21300064
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

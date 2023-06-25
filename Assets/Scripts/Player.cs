@@ -195,9 +195,11 @@ public class Player : MovingObject
     {
         //Check if food point total is less than or equal to zero.
         if(food <= 0)
+        {
         //Call the GameOver function of GameManager.
             SoundManager.instance.PlaySingle(gameOverSound);
             SoundManager.instance.musicSource.Stop();
             GameManager.instance.GameOver();
+        }
     }
 }
