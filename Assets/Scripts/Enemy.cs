@@ -17,6 +17,9 @@ public class Enemy : MovingObject
     //Boolean to determine whether or not enemy should skip a turn or move this turn.
     private bool skipMove;
 
+    public AudioClip enemyAttack1;
+    public AudioClip enemyAttack2;
+
     //Start overrides the virtual Start function of the base class.
     protected override void Start()
     {
@@ -81,6 +84,8 @@ public class Enemy : MovingObject
         Player hitPlayer = component as Player;
 
         animator.SetTrigger("enemyAttack");
+
+        SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
 
         //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
         hitPlayer.LoseFood(playerDamage);
